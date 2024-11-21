@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app3-deployment
+spec:
+  selector:
+    matchLabels:
+      app: app3
+  template:
+    metadata:
+      labels:
+        app: app3
+    spec:
+      containers:
+        - name: app3
+          image: nginx:stable
+          ports:
+            - containerPort: 80
+          volumeMounts:
+          - name: config-volume
+            mountPath: /etc/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: app3-html
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app3-service
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: app3
+                port:
+                  number: 80

@@ -1,11 +1,9 @@
 sudo apt-get update
 sudo apt-get install curl
 
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - --flannel-backend none --token 12345
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-ip $1 --write-kubeconfig-mode=644" sh -
 
-# sudo mkdir -p /home/vagrant/.kube
-# sudo cp /etc/rancher/k3s/k3s.yaml /home/vagrant/.kube/config
+echo "Sleeping for 10 seconds to wait for k3s to start"
+sleep 10
 
-# TOKEN=$(sudo cat /var/lib/rancher/k3s/server/node-token)
-
-# echo $TOKEN > /vagrant/token
+sudo cp /var/lib/rancher/k3s/server/node-token /vagrant/node-token
