@@ -1,7 +1,38 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app1
+spec:
+  rules:
+  - host: app1.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app1
+            port:
+              number: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    app:  app1
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1-deployment
+  name: app1-nginx
 spec:
   selector:
     matchLabels:
@@ -12,42 +43,14 @@ spec:
         app: app1
     spec:
       containers:
-        - name: app1
-          image: nginx:stable
-          ports:
-            - containerPort: 80
-          volumeMounts:
-          - name: config-volume
-            mountPath: /etc/config
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: app1-volume
+          mountPath: /usr/share/nginx/html
       volumes:
-        - name: config-volume
-          configMap:
-            name: app1-html
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: app1-service
-spec:
-  ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 8080
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ingress
-spec:
-  rules:
-    - host: app1.com
-      http:
-        paths:
-          - pathType: Prefix
-            path: "/"
-            backend:
-              service:
-                name: app1
-                port:
-                  number: 80
+      - name: app1-volume
+        configMap:
+          name: app1
