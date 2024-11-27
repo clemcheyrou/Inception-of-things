@@ -7,7 +7,7 @@ if command -v kubectl &> /dev/null; then
 else
     curl -LO https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl
     sudo chmod +x ./kubectl
-    sudo mv ./kubectl /usr/local/bin/kubectl
+    # sudo mv ./kubectl /usr/local/bin/kubectl
     kubectl version --client
 
     sleep 10

@@ -7,10 +7,9 @@ metadata:
 spec:
   project: argocd-project
   source:
-    repoURL: 
+    repoURL: https://hub.docker.com/r/wil42/playground
     targetRevision: featurebranch_1
     path: app
-    directory: https://hub.docker.com/r/wil42/playground
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
