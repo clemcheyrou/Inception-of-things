@@ -26,7 +26,7 @@ curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 k3d --version
 
 # create a single node cluster
-k3d cluster create dev-cluster --port 8080:80@loadbalancer --port 8080:443@loadbalancer
+k3d cluster create dev-cluster --port 8080:80@loadbalancer --port 8443:443@loadbalancer
 
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
