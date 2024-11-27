@@ -42,7 +42,7 @@ echo "All pods are ready"
 
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 
-kubectl apply -f ../confs/argocd.yaml
+# kubectl apply -f ../confs/argocd.yaml
 sleep 10
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
