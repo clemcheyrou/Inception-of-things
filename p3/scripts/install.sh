@@ -11,6 +11,7 @@ k3d --version
 # install kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # create a single node cluster
 k3d cluster create dev-cluster --port 8080:80@loadbalancer --port 8080:443@loadbalancer
@@ -19,7 +20,7 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 
-sleep 20
+sleep 10
 
 kubectl apply -f IOT/p3/confs/application.yaml
 
