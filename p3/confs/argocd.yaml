@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app: argocd
+  name: argocd-app
+spec:
+  project: argocd-project
+  source:
+    repoURL: 
+    targetRevision: featurebranch_1
+    path: app
+    directory: https://hub.docker.com/r/wil42/playground
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      # Supprime les ressources qui ne sont plus présentes dans le dépôt Git.
+      prune: true
+      # Réconcilie automatiquement le cluster si une ressource est modifiée manuellement.
+      selfHeal: true
