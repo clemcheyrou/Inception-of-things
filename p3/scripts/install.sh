@@ -32,7 +32,7 @@ k3d cluster create dev-cluster
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-kubectl rollout status 
+kubectl rollout status --namespace=argocd
 
 echo "All pods are ready"
 
