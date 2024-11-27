@@ -34,6 +34,6 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 sleep 10
 
-kubectl apply -f IOT/p3/confs/application.yaml
+kubectl apply -f /IOT/p3/confs/application.yaml
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
