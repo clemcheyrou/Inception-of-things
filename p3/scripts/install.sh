@@ -32,7 +32,7 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 
 pods_count=$(kubectl get pods -n argocd | grep -c "Running")
 
-while [ $pods_count -ne $(kubectl get pods -n argocd | grep -c "")]
+while [[ $pods_count -ne $(kubectl get pods -n argocd | grep -c "")]]
 do
  echo "waiting for all pods to be ready"
  sleep 10
