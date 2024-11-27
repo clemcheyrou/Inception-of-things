@@ -31,7 +31,6 @@ k3d cluster create dev-cluster
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-verifyPods(){
 pods_count=$(kubectl get pods -n $namespace | grep -c "Running")
 
 while [ $pods_count -ne $(kubectl get pods -n $namespace | grep -c "")]
@@ -41,7 +40,6 @@ do
 done
 
 echo "All pods are ready"
-}
 
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 
