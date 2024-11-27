@@ -32,10 +32,7 @@ k3d cluster create dev-cluster
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-kubectl wait pod \
---all \
---for=condition=ready \
---timeout=60s
+kubectl wait — for=condition=ready — timeout=30s pod/$(kubectl get pod -l app=name -o jsonpath=”{.items[0].metadata.name}”)
 
 echo "All pods are ready"
 
