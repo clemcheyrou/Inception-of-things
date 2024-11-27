@@ -20,7 +20,6 @@ else
     sudo sh get-docker.sh
 fi
 
-
 # install k3d
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 k3d --version
@@ -31,20 +30,17 @@ k3d cluster create dev-cluster
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-pods_count=$(kubectl get pods -n $namespace | grep -c "Running")
+while [[ $(kubectl get pods -n argocd -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}' 2> /dev/null) != "True True True True True True True" ]]; \
+ do echo "Waiting pods is starting..." && sleep 15; done
 
-while [ $pods_count -ne $(kubectl get pods -n $namespace | grep -c "")]
-do
- echo "waiting for all pods to be ready"
- sleep 10
-done
+echo "All pods is ready"
 
 echo "All pods are ready"
 
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 
+kubectl apply -f /IOT/p3/confs/application.yaml
 sleep 10
 
-kubectl apply -f /IOT/p3/confs/application.yaml
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
