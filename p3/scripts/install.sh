@@ -7,7 +7,7 @@ if command -v kubectl &> /dev/null; then
 else
     curl -LO https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl
     sudo chmod +x ./kubectl
-    # sudo mv ./kubectl /usr/local/bin/kubectl
+    sudo mv ./kubectl /usr/local/bin/kubectl
     kubectl version --client
 
     sleep 10
@@ -30,10 +30,8 @@ k3d cluster create dev-cluster
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-while [ $(kubectl get pods -n argocd -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}' | grep -c "True") -ne $(kubectl get pods -n argocd --no-headers | wc -l) ]; \
-do
-  echo "Waiting for pods to be ready..." && sleep 15;
-done
+while [[ $(kubectl get pods -n argocd -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}' 2> /dev/null) != "True True True True True True True" ]]; \
+ do echo "Waiting pods is starting..." && sleep 15; done
 
 echo "All pods is ready"
 
