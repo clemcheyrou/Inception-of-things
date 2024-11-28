@@ -15,7 +15,7 @@ spec:
           service:
             name: dev-service
             port:
-              number: 80
+              number: 8888
 
 ---
 apiVersion: v1
@@ -26,7 +26,7 @@ metadata:
     app: dev
 spec:
   ports:
-  - port: 80
+  - port: 8888
     protocol: TCP
   selector:
     app: dev
@@ -51,7 +51,7 @@ spec:
       - name: wil42
         image: nginx:alpine
         ports:
-        - containerPort: 80
+        - containerPort: 8888
         volumeMounts:
         - name: dev-volume
           mountPath: /usr/share/nginx/html
