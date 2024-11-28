@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   labels:
-    app: 
+    app: argocd
   name: argocd-app
 spec:
   project: argocd-project
@@ -11,7 +11,7 @@ spec:
     path: p3/dev/
   destination:
     server: https://kubernetes.default.svc
-    namespace: dev
+    namespace: argocd-app
   syncPolicy:
     automated:
       # Supprime les ressources qui ne sont plus présentes dans le dépôt Git.
