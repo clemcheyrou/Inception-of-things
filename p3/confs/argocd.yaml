@@ -1,11 +1,27 @@
 apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argocd-project
+  labels:
+    app: argocd
+spec:
+  description: Our ArgoCD Project to deploy our app locally
+  sourceRepos:
+  - "https://github.com/clemcheyrou/*"
+  destinations:
+  - namespace: dev
+    server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: false
+--
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   labels:
     app: argocd
   name: argocd-app
 spec:
-  project: default
+  project: argocd-project
   source:
     repoURL: https://github.com/clemcheyrou/Inception-of-things.git
     path: p3/dev/
