@@ -48,5 +48,7 @@ spec:
         ports:
         - containerPort: 8888
         volumeMounts:
-        - name: app2-volume
+        - name: wil42
           mountPath: /
+      volumes:
+      - name: wil42
