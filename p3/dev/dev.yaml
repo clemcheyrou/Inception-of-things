@@ -15,7 +15,7 @@ spec:
           service:
             name: dev-service
             port:
-              number: 8080
+              number: 80
 
 ---
 apiVersion: v1
@@ -26,7 +26,7 @@ metadata:
     app: dev
 spec:
   ports:
-  - port: 8080
+  - port: 80
     protocol: TCP
   selector:
     app: dev
@@ -51,7 +51,7 @@ spec:
       - name: nginx
         image: nginx
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         volumeMounts:
         - name: dev-volume
           mountPath: /usr/share/nginx/html
