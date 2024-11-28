@@ -47,3 +47,6 @@ spec:
         image: wil42/playground
         ports:
         - containerPort: 8888
+        volumeMounts:
+        - name: app2-volume
+          mountPath: /
