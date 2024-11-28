@@ -7,9 +7,8 @@ metadata:
 spec:
   project: argocd-project
   source:
-    repoURL: 
-    targetRevision: featurebranch_1
-    path: app
+    repoURL: https://github.com/clemcheyrou/Inception-of-things.git
+    path: p3/dev/
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
