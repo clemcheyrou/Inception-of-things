@@ -34,6 +34,9 @@ kubectl create namespace dev
 
 kubectl create configmap -n dev app-html --from-file '../dev/index.html'
 kubectl apply -n dev -f '../dev/dev.yaml'
+
+sleep 10
+
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 sleep 10
 
