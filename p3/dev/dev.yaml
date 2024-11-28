@@ -29,7 +29,7 @@ spec:
     - port: 8888
       protocol: TCP
   selector:
-    app:  dev
+    app: dev
 
 ---
 apiVersion: apps/v1
