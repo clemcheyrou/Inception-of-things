@@ -30,6 +30,9 @@ k3d --version
 k3d cluster create dev-cluster
 
 kubectl create namespace argocd
+kubectl create namespace dev
+
+kubectl apply -n dev -f ../confs/dev.yaml
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 sleep 10
 kubectl wait pod \
