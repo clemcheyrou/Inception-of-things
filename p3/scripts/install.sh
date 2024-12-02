@@ -34,7 +34,6 @@ kubectl create namespace dev
 
 kubectl create configmap -n dev app-html --from-file '../dev/index.html'
 kubectl apply -n dev -f '../dev/dev.yaml'
-kubectl port-forward svc/dev-service 8080:80 -n dev
 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 sleep 10
@@ -55,5 +54,6 @@ kubectl apply -n argocd -f ../confs/project.yaml
 kubectl apply -n argocd -f ../confs/argocd.yaml
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl port-forward svc/dev-service 8080:80 -n dev
 
 
