@@ -27,7 +27,9 @@ metadata:
 spec:
   ports:
   - port: 80
+    nodePort: 30007
     protocol: TCP
+  type: NodePort
   selector:
     app: dev
 
