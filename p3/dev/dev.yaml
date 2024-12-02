@@ -33,7 +33,7 @@ spec:
 
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: dev-deploy
   labels:
@@ -49,6 +49,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: wil42/playground:v2
+        image: wil42/playground:v1
         ports:
         - containerPort: 8888
