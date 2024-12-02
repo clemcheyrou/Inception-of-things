@@ -34,7 +34,9 @@ kubectl create namespace dev
 
 kubectl create configmap -n dev app-html --from-file '../dev/index.html'
 kubectl apply -n dev -f '../dev/dev.yaml'
-kubectl port-forward service/dev-service -n dev 8888:80
+
+POD_NAME=$(kubectl get pods -n dev -l app=dev -o jsonpath='{.items[0].metadata.name}')
+kubectl port-forward $POD_NAME 8888:80 -n dev 
 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 sleep 10
