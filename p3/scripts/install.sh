@@ -54,6 +54,6 @@ kubectl apply -n argocd -f ../confs/project.yaml
 kubectl apply -n argocd -f ../confs/argocd.yaml
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
-kubectl port-forward service/dev-service -n dev 8888:8888
+kubectl port-forward service/dev-service -n dev 8888:80
 
 
