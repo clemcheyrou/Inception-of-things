@@ -32,7 +32,6 @@ k3d cluster create dev-cluster
 kubectl create namespace argocd
 kubectl create namespace dev
 
-kubectl create configmap -n dev app-html --from-file '../dev/index.html'
 kubectl apply -n dev -f '../dev/dev.yaml'
 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
