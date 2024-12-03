@@ -30,6 +30,7 @@ spec:
     targetPort: 8888
     nodePort: 30080
     protocol: TCP
+  type: NodePort
   selector:
     app: dev
 
