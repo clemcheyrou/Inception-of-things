@@ -27,10 +27,10 @@ curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 k3d --version
 
 # create a single node cluster
-k3d cluster create dev-cluster -p "8080:80@loadbalancer" -p "8888:30080@agent:0" --agents 2
+k3d cluster create dev-cluster -p "8888:30080@agent:0" --agents 2
 
-kubectl create namespace argocd
 kubectl create namespace dev
+kubectl create namespace argocd
 
 kubectl apply -f '../dev/dev.yaml'
 
@@ -48,7 +48,7 @@ echo "All pods are ready"
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 echo ""
 
-# kubectl apply -n argocd -f ../confs/ingress.yaml
+kubectl apply -n argocd -f ../confs/ingress.yaml
 kubectl apply -n argocd -f ../confs/project.yaml
 kubectl apply -n argocd -f ../confs/argocd.yaml
 
