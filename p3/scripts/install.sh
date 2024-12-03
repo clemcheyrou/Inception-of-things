@@ -27,10 +27,10 @@ curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 k3d --version
 
 # create a single node cluster
-k3d cluster create dev-cluster -p "8888:30080"
+k3d cluster create dev-cluster -p "8080:80@loadbalancer" -p "8888:30080@agent:0" --agents 2
 
-kubectl create namespace dev
 kubectl create namespace argocd
+kubectl create namespace dev
 
 kubectl apply -f '../dev/dev.yaml'
 
