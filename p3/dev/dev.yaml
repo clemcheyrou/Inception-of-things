@@ -25,6 +25,7 @@ metadata:
   name: dev-service
   labels:
     app: dev
+    app.kubernetes.io/instance: argocd-app
 spec:
   ports:
   - port: 8888
