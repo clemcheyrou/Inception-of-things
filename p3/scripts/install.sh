@@ -48,7 +48,7 @@ echo "All pods are ready"
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 echo ""
 
-kubectl apply -n argocd -f ../confs/ingress.yaml
+# kubectl apply -n argocd -f ../confs/ingress.yaml
 kubectl apply -n argocd -f ../confs/project.yaml
 kubectl apply -n argocd -f ../confs/argocd.yaml
 
