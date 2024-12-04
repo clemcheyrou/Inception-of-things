@@ -1,7 +1,7 @@
 #!/bin/bash
 
 kubectl create namespace dev
-kubectl apply -f '../dev/dev.yaml'
+kubectl apply -f '../confs/dev/dev.yaml'
 sleep 10
 
 kubectl wait pod \
