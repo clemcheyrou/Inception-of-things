@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt-get install curl
+sudo apt-get install ca-certificates curl
 
 # https://docs.gitlab.com/charts/installation/tools.html
 # install kubectl
