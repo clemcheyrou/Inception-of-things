@@ -16,13 +16,23 @@ else
     sleep 10
 fi
 
+# helm install
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
 
+helm init
+
+k3d cluster create bonus-cluster
+
+kubectl apply -f 'storage.yaml'
+
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update gitlab
-helm search repo -l gitlab/gitlab-runner | head -n10
-helm pull gitlab/gitlab-runner --version 0.61.0
-tar xf gitlab-runner-0.61.0.tgz
-cd gitlab-runner/
+helm upgrade --install gitlab gitlab/gitlab \
+    --timout 600s \
+    --set global.hosts.domain=ccheyrou.com \
+    --set gitlab.migrations.initialRootPassword.key=1234 \
+    --set global.hosts.externalIP=10.10.10.10 \
+    --set certmanager-issuer.email=clemcheyrou@gmail.com
+
