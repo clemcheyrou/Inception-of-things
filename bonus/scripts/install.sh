@@ -28,7 +28,7 @@ k3d cluster create bonus-cluster
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update gitlab
 helm upgrade --install gitlab gitlab/gitlab \
-    --timout 600s \
+    --timeout 600s \
     --set global.hosts.domain=ccheyrou.com \
     --set gitlab.migrations.initialRootPassword.key=1234 \
     --set global.hosts.externalIP=10.10.10.10 \
