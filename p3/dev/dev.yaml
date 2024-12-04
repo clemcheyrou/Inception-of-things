@@ -28,9 +28,9 @@ metadata:
     app.kubernetes.io/instance: argocd-app
 spec:
   ports:
-  - port: 8888
+  - port: 8080
     targetPort: 8888
-    nodePort: 30080
+    nodePort: 8080
     protocol: TCP
   type: NodePort
   selector:

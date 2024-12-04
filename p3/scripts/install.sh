@@ -29,10 +29,9 @@ k3d --version
 # create a single node cluster
 k3d cluster create dev-cluster
 
-# kubectl create namespace dev
+kubectl create namespace dev
 kubectl create namespace argocd
-
-# kubectl apply -f '../dev/dev.yaml'
+kubectl apply -f '../dev/dev.yaml'
 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 sleep 10
@@ -52,4 +51,4 @@ kubectl apply -n argocd -f ../confs/ingress.yaml
 kubectl apply -n argocd -f ../confs/project.yaml
 kubectl apply -n argocd -f ../confs/argocd.yaml
 
-# kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl port-forward svc/argocd-server -n argocd 8081:443
