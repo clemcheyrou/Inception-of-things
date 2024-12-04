@@ -23,3 +23,6 @@ chmod 700 get_helm.sh
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update gitlab
 helm search repo -l gitlab/gitlab-runner | head -n10
+helm pull gitlab/gitlab-runner --version 0.61.0
+tar xf gitlab-runner-0.61.0.tgz
+cd gitlab-runner/
