@@ -17,8 +17,8 @@ fi
 
 k3d cluster create dev-cluster
 
-helm upgrade --install gitlab gitlab/gitlab \                                                            
-  --namespace gitlab \
+helm upgrade --install gitlab gitlab/gitlab \
+  --timeout 600s \                                                          
   --set global.hosts.domain=gitlab.example.com \
   --set global.hosts.gitlab.path=gitlab \
   --set global.hosts.disableCertmanager=true \
