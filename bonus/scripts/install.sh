@@ -19,6 +19,17 @@ k3d cluster create dev-cluster
 
 kubectl create namespace gitlab
 
+cat > pd-ssd-storage.yaml <<EOF
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: pd-ssd
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd
+EOF
+kubectl apply -f pd-ssd-storage.yaml
+
 helm upgrade --install gitlab gitlab/gitlab \
   --namespace gitlab \
   --set global.hosts.domain=gitlab.example.com \
