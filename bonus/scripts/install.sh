@@ -25,8 +25,6 @@ helm init
 
 k3d cluster create bonus-cluster
 
-kubectl apply -f 'storage.yaml'
-
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update gitlab
 helm upgrade --install gitlab gitlab/gitlab \
