@@ -1,9 +1,8 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt-get install ca-certificates curl
+sudo apt-get install curl
 
-# https://docs.gitlab.com/charts/installation/tools.html
 # install kubectl
 if command -v kubectl &> /dev/null; then
     echo "Kubectl installation found"
@@ -16,30 +15,17 @@ else
     sleep 10
 fi
 
-# helm install
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-chmod 700 get_helm.sh
-./get_helm.sh
+k3d cluster create dev-cluster
 
 
-k3d cluster create bonus-cluster
+kubectl apply -f gitlab-admin-service-account.yaml
+kubectl config view --raw \
+-o=jsonpath='{.clusters[0].cluster.certificate-authority-data}' \
+| base64 --decode
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep gitlab | awk '{print $1}')
 
-helm init
-helm repo add gitlab https://charts.gitlab.io/
-helm repo update
+kubectl create namespace gitlab-runner
+helm repo add gitlab https://charts.gitlab.io
+helm install --namespace gitlab-runner gitlab-runner -f gitlab-runner.yaml gitlab/gitlab-runner
 
-# kubectl create namespace gitlab
-# kubectl create -f gitlab-role.yaml
-# kubectl apply --namespace gitlab -f gitlab-role-bind.yml
-
-# helm install --namespace gitlab --generate-name -f values.yaml gitlab/gitlab-runner
-# sleep 10
-
-# helm ls -A
-# kubectl describe pods gitlab --namespace=gitlab
-
-helm upgrade --install gitlab gitlab/gitlab \
-    --version 8.6.1 \
-    --set global.hosts.domain=example.com \
-    --set certmanager-issuer.email=me@example.com
 
