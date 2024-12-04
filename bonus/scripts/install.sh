@@ -17,6 +17,8 @@ fi
 
 k3d cluster create dev-cluster
 
+kubectl create namespace gitlab
+
 helm upgrade --install gitlab gitlab/gitlab \
   --namespace gitlab \
   --set global.hosts.domain=gitlab.example.com \
