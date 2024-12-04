@@ -21,16 +21,25 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scrip
 chmod 700 get_helm.sh
 ./get_helm.sh
 
-helm init
 
 k3d cluster create bonus-cluster
 
+helm init
 helm repo add gitlab https://charts.gitlab.io/
-helm repo update gitlab
+helm repo update
+
+# kubectl create namespace gitlab
+# kubectl create -f gitlab-role.yaml
+# kubectl apply --namespace gitlab -f gitlab-role-bind.yml
+
+# helm install --namespace gitlab --generate-name -f values.yaml gitlab/gitlab-runner
+# sleep 10
+
+# helm ls -A
+# kubectl describe pods gitlab --namespace=gitlab
+
 helm upgrade --install gitlab gitlab/gitlab \
     --timeout 600s \
-    --set global.hosts.domain=ccheyrou.com \
-    --set gitlab.migrations.initialRootPassword.key=1234 \
-    --set global.hosts.externalIP=10.10.10.10 \
+    --set global.hosts.domain=example.com \
     --set certmanager-issuer.email=me@example.com
 
