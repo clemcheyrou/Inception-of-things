@@ -1,0 +1,48 @@
+image:
+  registry: registry.gitlab.com
+  image: gitlab-org/gitlab-runner
+  # tag: alpine-v11.6.0
+
+imagePullPolicy: IfNotPresent
+
+revisionHistoryLimit: 2
+
+gitlabUrl: https://gitlab.com
+
+runnerRegistrationToken: "1234"
+
+terminationGracePeriodSeconds: 3600
+concurrent: 10
+checkInterval: 30
+
+logLevel: warn
+logFormat: text
+
+rbac:
+  create: true
+
+  rules:
+    - apiGroups: [""]
+      resources: ["pods", "configmaps", "jobs", "secrets", "cronjobs", "services", "deployments", "daemonsets", "statefulsets", "pods/attach", "pods/exec"]
+      verbs: ["get", "list", "watch", "create", "update","delete"]
+    - apiGroups: [""]
+      resources: ["pods/log"]
+      verbs: ["get"]
+
+  clusterWideAccess: true
+
+  podSecurityPolicy:
+    enabled: false
+    resourceNames:
+    - gitlab-runner
+
+runners:
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "{{.Release.Namespace}}"
+        image = "ubuntu:16.04"
+        service_account = "gitlab-runner"    
+
+  maximumTimeout: "3600"
+  runUntagged: true
