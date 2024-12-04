@@ -32,5 +32,5 @@ helm upgrade --install gitlab gitlab/gitlab \
     --set global.hosts.domain=ccheyrou.com \
     --set gitlab.migrations.initialRootPassword.key=1234 \
     --set global.hosts.externalIP=10.10.10.10 \
-    --set certmanager-issuer.email=clemcheyrou@gmail.com
+    --set certmanager-issuer.email=me@example.com
 
