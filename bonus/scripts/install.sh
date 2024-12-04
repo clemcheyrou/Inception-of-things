@@ -39,7 +39,7 @@ helm repo update
 # kubectl describe pods gitlab --namespace=gitlab
 
 helm upgrade --install gitlab gitlab/gitlab \
-    --timeout 600s \
+    --version 8.6.1 \
     --set global.hosts.domain=example.com \
     --set certmanager-issuer.email=me@example.com
 
