@@ -29,7 +29,7 @@ sudo kubectl create secret tls example-tls-secret \
   --key=/root/certs/devops.key
 
 helm upgrade --install gitlab gitlab/gitlab \                                                            
-  --namespace gitlab \
+  --namespace gl \
   --set global.hosts.domain=gitlab.example.com \
   --set global.hosts.gitlab.path=gitlab \
   --set global.hosts.disableCertmanager=true \
