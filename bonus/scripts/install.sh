@@ -31,29 +31,28 @@ else
     k3d --version
 fi
 
-k3d cluster create dev-cluster -p 8080:80@loadbalancer
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
 
+k3d cluster create dev-cluster -p 8080:80@loadbalancer
 kubectl create namespace gitlab
 
-cat > my-persistent-volume.yaml <<EOF
-apiVersion: v1
-kind: PersistentVolume
+cat > pd-ssd-storage.yaml <<EOF
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
 metadata:
-  name: my-persistent-volume
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /var/storage
+  name: pd-ssd
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd
 EOF
+kubectl apply -f pd-ssd-storage.yaml
 
-kubectl apply -f my-persistent-volume.yaml
 helm repo add charts.gitpod.io https://charts.gitpod.io
 helm repo update
 helm upgrade --install gitlab gitlab/gitlab \
+  --namespace gitlab \
   --timeout 600s \
   --set global.hosts.domain=example.com \
   --set global.hosts.externalIP=127.0.0.1 \
