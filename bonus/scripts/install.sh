@@ -15,27 +15,46 @@ else
     sleep 10
 fi
 
-k3d cluster create dev-cluster
+# install docker
+if command -v docker &> /dev/null; then
+    echo "Docker installation found"
+else
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+fi
+
+# install k3d
+if command -v k3d &> /dev/null; then
+    echo "K3d installation found"
+else
+    curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+    k3d --version
+fi
+
+k3d cluster create dev-cluster -p 8080:80@loadbalancer
 
 kubectl create namespace gitlab
 
-cat > pd-ssd-storage.yaml <<EOF
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
+cat > my-persistent-volume.yaml <<EOF
+apiVersion: v1
+kind: PersistentVolume
 metadata:
-  name: pd-ssd
-provisioner: kubernetes.io/gce-pd
-parameters:
-  type: pd-ssd
+  name: my-persistent-volume
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /var/storage
 EOF
-kubectl apply -f pd-ssd-storage.yaml
 
+kubectl apply -f my-persistent-volume.yaml
+helm repo add charts.gitpod.io https://charts.gitpod.io
+helm repo update
 helm upgrade --install gitlab gitlab/gitlab \
-  --namespace gitlab \
-  --set global.hosts.domain=gitlab.example.com \
-  --set global.hosts.gitlab.path=gitlab \
-  --set global.hosts.disableCertmanager=true \
-  --set certmanager-issuer.email=dummy@example.com \
-  --set gitlab-runner.runners.privileged=true \
-  --set global.smtp.openssl_verify_mode='none' \
-  --set global.email.display_name='DevOps Gitlab'
+  --timeout 600s \
+  --set global.hosts.domain=example.com \
+  --set global.hosts.externalIP=127.0.0.1 \
+  --set certmanager-issuer.email=me@example.com
