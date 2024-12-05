@@ -49,8 +49,8 @@ parameters:
 EOF
 kubectl apply -f pd-ssd-storage.yaml
 
-helm repo add charts.gitpod.io https://charts.gitpod.io
-helm repo update
+helm repo add gitlab https://charts.gitlab.io
+helm repo update gitlab
 helm upgrade --install gitlab gitlab/gitlab \
   --namespace gitlab \
   --timeout 600s \
