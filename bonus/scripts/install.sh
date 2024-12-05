@@ -38,22 +38,12 @@ chmod 700 get_helm.sh
 k3d cluster create dev-cluster -p 8080:80@loadbalancer
 kubectl create namespace gitlab
 
-cat > pd-ssd-storage.yaml <<EOF
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: pd-ssd
-provisioner: kubernetes.io/gce-pd
-parameters:
-  type: pd-ssd
-EOF
-kubectl apply -f pd-ssd-storage.yaml
-
 helm repo add gitlab https://charts.gitlab.io
 helm repo update gitlab
-helm upgrade --install gitlab gitlab/gitlab \
-  --namespace gitlab \
-  --timeout 600s \
+sudo helm upgrade --install gitlab gitlab/gitlab \
+  -n gitlab \
+  -f https://gitlab.com/gitlab-org/charts/gitlab/raw/master/examples/values-minikube-minimum.yaml \
   --set global.hosts.domain=example.com \
-  --set global.hosts.externalIP=127.0.0.1 \
-  --set certmanager-issuer.email=me@example.com
+  --set global.hosts.externalIP=0.0.0.0 \
+  --set global.hosts.https=false \
+  --timeout 600s
