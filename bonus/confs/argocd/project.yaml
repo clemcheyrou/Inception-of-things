@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argocd-project
+  labels:
+    app: argocd
+spec:
+  description: Our ArgoCD Project to deploy our app locally
+  sourceRepos:
+  - "https://127.0.0.1:8181/root/*"
+  destinations:
+  - namespace: dev
+    server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: false

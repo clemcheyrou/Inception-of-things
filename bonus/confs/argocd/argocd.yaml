@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app: argocd
+  name: argocd-app
+spec:
+  project: argocd-project
+  source:
+    repoURL: https://127.0.0.1:8181/root/gitlab.git
+    path: /
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitla
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
