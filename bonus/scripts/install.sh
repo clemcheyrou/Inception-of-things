@@ -45,3 +45,5 @@ fi
 # create a single node cluster
 k3d cluster create dev-cluster
 bash ../scripts/gitlab.sh
+bash ../scripts/argocd.sh
+bash ../scripts/dev.sh
