@@ -48,6 +48,7 @@ sudo helm upgrade --install gitlab gitlab/gitlab \
   --set global.hosts.https=false \
   --timeout 600s
 
+echo "Wait gitlab pods running"
 kubectl wait pod \
 --all \
 --for=condition=Ready \
@@ -57,5 +58,5 @@ echo "$(kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -o json
 
 kubectl port-forward svc/gitlab-webservice-default -n argocd 80:8181 > /dev/null 2>&1 &
 
-bash argocd.sh
-bash dev.sh
+# bash argocd.sh
+# bash dev.sh
