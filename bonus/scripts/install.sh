@@ -55,11 +55,11 @@ kubectl wait pod \
 --namespace=gitlab \
 --timeout=60s
 
-echo "Gitlab password:"
-echo "$(kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -o jsonpath='{.data.password}' | base64 --decode)"
-echo ""
+# echo "Gitlab password:"
+# echo "$(kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -o jsonpath='{.data.password}' | base64 --decode)"
+# echo ""
 
-kubectl port-forward svc/gitlab-webservice-default -n gitlab 80:8181
+# kubectl port-forward svc/gitlab-webservice-default -n gitlab 80:8181
 
 # bash argocd.sh
 # bash dev.sh
