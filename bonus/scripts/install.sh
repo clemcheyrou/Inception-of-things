@@ -46,7 +46,7 @@ sudo helm upgrade --install gitlab gitlab/gitlab \
   --set global.hosts.domain=example.com \
   --set global.hosts.externalIP=0.0.0.0 \
   --set global.hosts.https=false \
-  --timeout 600s
+#   --timeout 600s
 
 echo "Wait gitlab pods running"
 kubectl wait pod \
