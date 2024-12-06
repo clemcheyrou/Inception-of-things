@@ -13,4 +13,3 @@ kubectl -n dev get pods
 echo "All pods are ready"
 
 kubectl port-forward svc/dev-service -n dev 8888:8888
-
