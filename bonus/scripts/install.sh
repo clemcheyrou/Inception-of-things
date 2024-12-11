@@ -35,7 +35,7 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scrip
 chmod 700 get_helm.sh
 ./get_helm.sh
 
-k3d cluster create dev-cluster -p 8080:80@loadbalancer
+k3d cluster create dev-cluster
 kubectl create namespace gitlab
 
 helm repo add gitlab https://charts.gitlab.io
@@ -55,11 +55,11 @@ kubectl wait pod \
   --namespace=gitlab \
   --timeout=60s
 
- echo "Gitlab password:"
- echo "$(kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -o jsonpath='{.data.password}' | base64 --decode)"
- echo ""
+echo "Gitlab password:"
+echo "$(kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -o jsonpath='{.data.password}' | base64 --decode)"
+echo ""
 
- #kubectl port-forward svc/gitlab-webservice-default -n gitlab 80:8181 > /dev/null 2>&1&
+#kubectl port-forward svc/gitlab-webservice-default -n gitlab 80:8181 > /dev/null 2>&1&
 
- bash argocd.sh
- bash dev.sh
+bash argocd.sh
+bash dev.sh
