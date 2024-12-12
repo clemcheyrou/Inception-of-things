@@ -7,8 +7,8 @@ metadata:
 spec:
   project: argocd-project
   source:
-    repoURL: https://github.com/clemcheyrou/Inception-of-things.git
-    path: p3/confs/dev/
+    repoURL: https://github.com/albibou/ccheyrou-app.git
+    path: .
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
