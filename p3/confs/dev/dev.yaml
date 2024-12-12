@@ -54,4 +54,4 @@ spec:
           service:
             name: dev-service
             port:
-              number: 80
+              number: 8888
